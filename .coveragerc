@@ -1,0 +1,6 @@
+[run]
+include = net153/*
+omit = *migrations*, *tests*
+disable_warnings = already-imported
+plugins =
+    django_coverage_plugin
