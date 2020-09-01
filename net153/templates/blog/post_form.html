@@ -1,0 +1,21 @@
+{% extends "blog.html" %}
+
+{% block title %} {{view.action | default:"Add" }} Post {% endblock %}
+
+{% block content %}
+
+<article class="story">
+  <header>
+    <h3>{{view.action | default:'Add'}} Post</h3>
+  </header>
+
+  <section>
+    <form id="add-post" method="post" action=".">
+      {% csrf_token %}
+      {{ form.as_p  }}
+      <button type="submit">Save</button>
+    </form>
+  </section>
+</article>
+
+{% endblock content %}

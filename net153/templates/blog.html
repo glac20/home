@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+{% load static tag_cloud awesomizer %}
+{% render_time %}
+<html lang='en'>
+
+<head>
+  <title>{% block title %}Blog{% endblock title %}</title>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="{% static 'images/favicons/favicon.ico' %}">
+  {% block css %}
+  <link href="{% static 'css/main.css' %}" rel="stylesheet">
+  {% endblock css %}
+
+</head>
+
+<body>
+
+  <nav>
+    <a href="{% url 'blog:list' %}">
+      <div class="logo"></div>
+    </a>
+    <ul>
+      <li><a class="nav" href="{% url 'home' %}" title="Home">Home</a></li>
+      <li><a class="nav" href="{% url 'wserver' %}" title="Server Stats">Server Stats</a></li>
+      <li><a class="nav" href="{% url 'blog:list' %}" title="Tech Blog">Tech Blog</a></li>
+    </ul>
+  </nav>
+
+  {% if messages %}
+  {% for message in messages %}
+  <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+    {{ message }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  </div>
+  {% endfor %}
+  {% endif %}
+
+  <div id="banner-wrap">
+    <aside id="banner">
+      {% if view.category == 'GE' %}
+      <header>
+        <h1><a class="title" href="{% url 'blog:list' %}">Blog</a></h1>
+      </header>
+      <span style="font-weight: bold;">Yet another bland blog</span> <span style="font-size: smaller;">(YABB)</span>
+      {% elif view.category == 'TE' %}
+      <header>
+        <h1><a class="title" href="{% url 'blog:tech-list' %}">Blog</a></h1>
+      </header>
+      <span style="font-weight: bold;">Yet another tech blog</span> <span style="font-size: smaller;">(YATB)</span>
+      {% else %}
+        <!-- missing -->
+      {% endif %}
+
+    </aside>
+  </div>
+
+  <div class="flex">
+    <aside id="about">
+
+      {% if view.category == 'GE' %}
+        {% include "blog/_about_ge.html"%}
+      {% elif view.category == 'TE' %}
+        {% include "blog/_about_te.html"%}
+      {% else %}
+        <!-- missing -->
+      {% endif %}
+
+      <article>
+        <header>
+          <h4 style="font-weight: bold; text-align: center; color: #7e7e7e;">Tags</h4>
+        </header>
+        {% cloud_tags category=view.category min_count=2 as tags %}
+        <section>
+          <p style="text-align: center; margin-top: 0rem;">
+            {% for t in tags %}
+            <a href="{% url 'blog:list' %}?-tags={{t.slug}}" title="{{t.tag_count}} postings tagged" style="font-size: {{t.font_size}}%; color: #{{t.font_color}};">{{t.name}}</a>
+            {% endfor %}
+          </p>
+        </section>
+      </article>
+
+    </aside>
+
+    <main id="main">
+
+      {% include "blog/_nav.html"%}
+
+      {% block content %}
+      <p></p>
+      {% endblock content %}
+
+      {% include "blog/_nav.html"%}
+
+    </main>
+    <!--End main -->
+  </div> <!-- End flex -->
+  <aside id="footer">
+    render time: {{ total_render_time }} 
+
+    <p>
+
+      <a rel="license" href="https://creativecommons.org/licenses/by/3.0/"><img alt="Creative Commons License" src="https://creativecommons.org/images/public/somerights20.png"></a>
+
+      <a href="https://validator.w3.org/check?uri=referer"><img src="https://www.w3.org/Icons/valid-html401" alt="Valid HTML 4.01 Strict" height="31" width="88"></a>
+
+      <img src='https://www.vim.org/images/vim.vialle.love.anim.gif' alt="">
+
+    </p>
+    <p>
+
+      <img src="{% static 'images/pb_blosxom.png' %}" alt="">
+      <img src="{% static 'images/Debian.gif' %}" alt="">
+
+    </p>
+  </aside>
+</body>
+
+</html>

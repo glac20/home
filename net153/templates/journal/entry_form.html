@@ -1,0 +1,20 @@
+{% extends "journal.html" %}
+
+{% block title %} {{view.action | default:"New" }} Entry {% endblock %}
+{% block content %}
+
+<article class="story">
+  <header>
+    <h3>{{view.action | default:'New'}} Entry</h3>
+  </header>
+
+  <section>
+    <form id="add-entry" method="post" action=".">
+      {% csrf_token %}
+      {{ form.as_p  }}
+      <button type="submit">Save</button>
+    </form>
+  </section>
+</article>
+
+{% endblock content %}

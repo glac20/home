@@ -1,0 +1,56 @@
+{% extends "blog.html" %}
+{% load  awesomizer %}
+
+{% block title %} {{ post.title }} {% endblock title %}
+
+{% block content %}
+<section class="date"><h4>{{post.created | date:"l F jS, Y"}}</h4></section>
+<!--story-->
+<article class="story">
+  <header>
+    <h3><a href="{% url 'blog:detail' slug=post.slug %}">{{post.title}}</a></h3>
+  </header>
+
+  <section>
+    {% blog_print post 'seemore' %}
+  </section>
+  <section class="tag">
+    Posted: {{ post.created | date:"D, F j, Y - H:i:s" }}
+    <p>Tagged as:
+      {% for t in post.tags.all %}
+      <a href="{% url 'blog:list' %}?-tags={{t.name | urlencode }}">{{t.name}}</a>{% if not forloop.last %}, {% endif %}
+      {% endfor %}
+    </p>
+
+    <section class='related-stories'>
+    {% for rp in post.related_posts.all %}
+    {% if rp.related_count %}
+      {% if forloop.first %}
+        <h4>Related stories</h4><ul>
+      {% endif %}
+
+        <li>
+          <a href="{% url 'blog:detail' slug=rp.related_slug %}" title="{{rp.related_count}} shared tags: {{rp.related_tags}}">{{rp.related_title}}</a>
+          ({{rp.related_count}} shared tags)
+        </li>
+      {% if forloop.last %}
+        </ul>
+      {% endif %}
+    {% endif %}
+    {% endfor %}
+    </section>
+
+
+    <!-- count-->
+    <a href="{% url 'blog:detail' slug=post.slug %}">Comments: {{post.comments.count}}</a>
+
+
+  </section>
+  {% include "blog/_comments.html"%}
+
+  {% if user.is_authenticated %}
+  <a href="{% url 'blog:update' slug=post.slug %}">Update</a>
+  {% endif %}
+</article>
+<!--end story-->
+{% endblock content %}

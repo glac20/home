@@ -1,0 +1,18 @@
+<section>
+  {% if page_obj.paginator.num_pages > 1 %}
+  <div class="moreentries">
+    {% if page_obj.has_previous %}
+    <a href="?page={{ page_obj.previous_page_number }}">&laquo;Previous {{page_obj.paginator.per_page}} entries |</a>
+    {% endif %}
+
+    {% if page_obj.next_page_number == page_obj.paginator.num_pages %}
+    {% widthratio page_obj.paginator.per_page -1 page_obj.number as cur_total %}
+    <a href="?page={{ page_obj.next_page_number }}"> Next {{page_obj.paginator.count|add:cur_total }} entries&raquo;</a>
+    {% elif page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}"> Next {{page_obj.paginator.per_page}} entries&raquo;</a>
+    {% else %}
+    <!-- next page -->
+    {% endif %}
+  </div>
+  {% endif %}
+</section>

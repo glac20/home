@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}{{ user.username }}{% endblock %}
+
+{% block content %}
+<main>
+  <article>
+    <header>
+      <h1>{{ user.username }}</h1>
+    </header>
+    <section>
+      <form class="form-horizontal" method="post" action="{% url 'users:update' %}">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit" class="btn btn-primary">Update</button>
+      </form>
+    </section>
+  </article>
+
+</main>
+
+{% endblock content %}

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+{% load static awesomizer %}
+{% render_time %}
+
+<html lang='en'>
+
+<head>
+  <title>{% block title %}Journal{% endblock title %}</title>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="{% static 'images/favicons/favicon.ico' %}">
+  {% block css %}
+  <link href="{% static 'css/main.css' %}" rel="stylesheet">
+  {% endblock css %}
+
+</head>
+
+<body>
+
+  <nav>
+    <a href="{% url 'journal:list' %}">
+      <div class="logo"></div>
+    </a>
+    <ul>
+      <li><a class="nav" href="{% url 'home' %}" title="Home">Home</a></li>
+      <li><a class="nav" href="{% url 'wserver' %}" title="Server Stats">Server Stats</a></li>
+      <li><a class="nav" href="{% url 'blog:list' %}" title="Tech Blog">Tech Blog</a></li>
+    </ul>
+  </nav>
+
+  {% if messages %}
+  {% for message in messages %}
+  <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+    {{ message }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  </div>
+  {% endfor %}
+  {% endif %}
+
+  <div id="banner-wrap">
+    <aside id="banner">
+      <header>
+        <h1><a class="title" href="{% url 'journal:add' %}">Journal</a></h1>
+      </header>
+      <span style="font-weight: bold;">Yet another journal</span> <span style="font-size: smaller;">(YAJ)</span>
+    </aside>
+  </div>
+
+  <div class="flex">
+    <main id="main">
+
+      {% include "blog/_nav.html"%}
+
+      {% block content %}
+      <p></p>
+      {% endblock content %}
+    </main>
+    <!--End main -->
+  </div> <!-- End flex -->
+  <aside id="footer">
+    render time: {{ total_render_time }}
+    {% include "blog/_nav.html"%}
+  </aside>
+</body>
+
+</html>

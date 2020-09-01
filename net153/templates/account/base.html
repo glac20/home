@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}{% block head_title %}{% endblock head_title %}{% endblock title %}
+
+{% block content %}
+<main>
+  <article>
+    <header>
+      {% block htitle %} {% endblock htitle%}
+    </header>
+    <section>
+      {% block inner %}{% endblock %}
+    </section>
+  </article>
+
+</main>
+
+{% endblock content %}

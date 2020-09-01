@@ -1,0 +1,20 @@
+{% extends "journal.html" %}
+{% load markdownify %}
+
+{% block title %} {{ entry.date }} {% endblock title %}
+
+{% block content %}
+<!--story-->
+<article class="story">
+  <header>
+    <h3><a href="{% url 'journal:detail' date=entry.date %}">{{entry.date | date:"l F jS, Y"}}</a></h3>
+  </header>
+
+  <section>
+    {{entry.body | markdownify}}
+  </section>
+
+  <a href="{% url 'journal:update' date=entry.date %}">Update</a>
+</article>
+<!--end story-->
+{% endblock content %}

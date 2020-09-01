@@ -1,0 +1,57 @@
+{% load markdownify %}
+
+<section class="comments">
+  <!-- comment head -->
+  <header>
+    <h4 style="font-weight: bold; text-align: center; color: #7e7e7e;">Comments</h4>
+  </header>
+
+  <!-- feedback::comments -->
+  {% for c in post.comments.all %}
+  <div class="comment">
+    {% if c.url %}
+    <p><a href="{{c.url}}">{{c.name}}</a> wrote on {{ c.created | date:"Y-m-d \a\t H:i:s"}} -</p>
+    {% else %}
+    <p>{{c.name}} wrote on {{ c.created | date:"Y-m-d \a\t H:i:s"}} -</p>
+    {% endif %}
+    <blockquote>{{c.body | markdownify:"comment"}}</blockquote>
+  </div>
+  {% endfor %}
+  {% if comment_posted %}
+  <!-- response  $feedback::comment_response -->
+  <p class="comment-response">Thanks for the comment.</p>
+  {% endif %}
+
+  {% if has_previewed and form.instance %}
+  <!-- preview feedback::preview -->
+  <div class="comment">
+    {% if form.instance.url %}
+    <p><a href="{{form.instance.url}}">{{form.instance.name}}</a> wrote on {{ form.instance.created | date:"Y-m-d \a\t H:i:s"}} -</p>
+    {% else %}
+    <p>{{form.instance.name}} wrote on {{ form.instance.created | date:"Y-m-d \a\t H:i:s"}} -</p>
+    {% endif %}
+    <blockquote>{{form.instance.body | markdownify:"comment"}}</blockquote>
+  </div>
+  {% endif %}
+
+  <!-- form-->
+  <form id="add-comment" method="post" action="{% url 'blog:comment-add' post.slug %}">
+    {% csrf_token %}
+    <table style="text-align: center;">
+      {{ form.as_table }}
+      <tr>
+      {% if has_previewed %}
+        <td><input type="submit" name="submit" value="Preview"></td>
+        <td><input type="submit" name="submit" value="Submit"></td>
+      {% else %}
+        <td></td>
+        <td><input type="submit" name="submit" value="Preview"></td>
+      {% endif %}
+      </tr>
+      <tr>
+        <td colspan="2"><br><a href="http://daringfireball.net/projects/markdown/dingus">MarkDown syntax guide</a></td>
+      </tr>
+    </table>
+  </form>
+  <!-- comment foot -->
+</section>
