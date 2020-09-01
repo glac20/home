@@ -1,3 +1,5 @@
+![python app](https://github.com/glac20/home/actions/workflows/python-app.yml/badge.svg)
+
 net153
 ==============================
 
