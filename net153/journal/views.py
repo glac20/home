@@ -1,5 +1,6 @@
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse
 
 from .models import Entry
 
@@ -21,6 +22,9 @@ class EntryCreateView(LoginRequiredMixin, CreateView):
     slug_field = 'date'
     slug_url_kwarg = 'date'
     fields = ['date', 'body']
+
+    def get_success_url(self):
+        return reverse('journal:list')
 
 
 class EntryUpdateView(LoginRequiredMixin, UpdateView):
