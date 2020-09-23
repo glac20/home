@@ -41,13 +41,6 @@ class PostListView(ListView):
 class PostDetailView(CategoryMixin, DetailView):
     model = Post
 
-    def get_queryset(self):
-        qs = super().get_queryset()
-        return qs.prefetch_related(
-            models.Prefetch(
-                'comments',
-                queryset=Comment.objects.order_by('created')))
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = CommentForm()
