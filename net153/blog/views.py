@@ -30,7 +30,7 @@ class PostListView(ListView):
         tags = self.request.GET.get('-tags')
         if tags:
             tags = tags.split(',')
-            qs = qs.filter(tags__slug__exact=tags[0])
+            qs = qs.filter(tags__slug__in=tags)
 
         qs = qs.annotate(comment_count=models.Count('comments'))
         qs = qs.prefetch_related('tags').prefetch_related(
