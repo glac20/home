@@ -7,10 +7,6 @@ from django.utils.safestring import mark_safe
 from tlru_cache import tlru_cache
 from net153.blog.models import AutoLink
 
-import logging
-
-# Get an instance of a logger
-logger = logging.getLogger(__name__)
 
 register = template.Library()
 
@@ -23,8 +19,10 @@ def colorlinks(text):
 
         if re.search(r'\.wiki|\.edu', m[1], flags=re.I):
             c = 'class="blue"'
-        elif re.search(r'net153|See more', m[1], flags=re.I):
+        elif re.search(r'net153\.net|See more', m[1], flags=re.I):
             c = ''
+        elif re.search(r'github', m[1], flags=re.I):
+            c = 'class="purple"'
         else:
             c = 'class="green"'
         return f'<a {c} {m[1]}>'
