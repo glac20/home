@@ -43,6 +43,9 @@ class Post(TimeStampedModel):
 
 
 class Comment(TimeStampedModel):
+    class Meta:
+        ordering = ('created',)
+
     name = models.CharField('Name', max_length=32)
     url = models.TextField('URL', blank=True)
     test = models.CharField('Captcha', max_length=3)
