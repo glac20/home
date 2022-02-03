@@ -12,6 +12,9 @@
   border-color: #eed3d7;
 }
 
+strong {
+  font-size: 1.8rem;
+}
 
 html {
   font-size: 10px
