@@ -12,9 +12,37 @@
     <form id="add-entry" method="post" action=".">
       {% csrf_token %}
       {{ form.as_p  }}
+      <p id="word-count" style="font-size: smaller;">0</p>
       <button type="submit">Save</button>
     </form>
   </section>
 </article>
 
 {% endblock content %}
+
+{% block extra_scripts %}
+<script>
+  function count_words() {
+    const limit = 5;
+    let count = 0;
+    return (txt) => {
+      let word_count = 0;
+      if (++count > limit) {
+        count = 0;
+        const m = txt.match(/[^\s]+/g);
+        word_count = m ? m.length : 0;
+      }
+      return word_count;
+    };
+  }
+  document.addEventListener('DOMContentLoaded', function() {
+    const counter = count_words();
+    document.getElementById('id_body').addEventListener('input', (event) => {
+      const count = counter(event.target.value);
+      if (count) {
+        document.getElementById('word-count').innerText = count;
+      }
+    });
+  });
+</script>
+{% endblock extra_scripts %}
