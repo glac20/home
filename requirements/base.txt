@@ -3,7 +3,6 @@ python-slugify>=4.0.1  # https://github.com/un33k/python-slugify
 argon2-cffi>=20.1.0  # https://github.com/hynek/argon2_cffi
 whitenoise>=5.2.0  # https://github.com/evansd/whitenoise
 unidecode>=1.1.1 # https://pypi.org/project/Unidecode/
-tlru-cache>=0.1.0a2 # https://github.com/leonhard-s/tlru-cache
 
 # Django
 # ------------------------------------------------------------------------------

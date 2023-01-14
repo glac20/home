@@ -1,5 +1,7 @@
 import time
+from functools import lru_cache
 import re
+import logging
 import markdown
 from django import template
 from django.utils.html import escape
@@ -8,6 +10,7 @@ from tlru_cache import tlru_cache
 from net153.blog.models import AutoLink
 
 
+logger = logging.getLogger(__name__)
 register = template.Library()
 
 
@@ -31,8 +34,12 @@ def colorlinks(text):
 
 
 def autolinks(text):
-    auto_links = _get_auto_links()
-    for al in auto_links:
+    auto_links = _get_auto_links
+    if auto_links.cache_info().hits > 10000:
+        logger.info('Clearing autolink cache')
+        auto_links.cache_clear()
+
+    for al in auto_links():
 
         url = escape(al['url'])
         text = re.sub(
@@ -54,7 +61,7 @@ def noseemore(text, post):
     return s
 
 
-@tlru_cache(maxsize=1, lifetime=1800, typed=False)
+@lru_cache(maxsize=1, typed=False)
 def _get_auto_links():
     return AutoLink.objects.all().values('name', 'url')
 
