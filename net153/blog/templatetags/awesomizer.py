@@ -6,9 +6,7 @@ import markdown
 from django import template
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
-from tlru_cache import tlru_cache
 from net153.blog.models import AutoLink
-
 
 logger = logging.getLogger(__name__)
 register = template.Library()
