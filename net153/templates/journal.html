@@ -40,7 +40,11 @@
   <div id="banner-wrap">
     <aside id="banner">
       <header>
+        {% if view.action == 'list' %}
         <h1><a class="title" href="{% url 'journal:add' %}">Journal</a></h1>
+        {% else %}
+        <h1><a class="title" href="{% url 'journal:list' %}">Journal</a></h1>
+        {% endif %}
       </header>
       <span style="font-weight: bold;">Yet another journal</span> <span style="font-size: smaller;">(YAJ)</span>
     </aside>

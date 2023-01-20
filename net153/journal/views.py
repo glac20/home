@@ -9,6 +9,7 @@ class EntryListView(LoginRequiredMixin, ListView):
     model = Entry
     ordering = '-date'
     paginate_by = 40
+    action = 'list'
 
 
 class EntryDetailView(LoginRequiredMixin, DetailView):
