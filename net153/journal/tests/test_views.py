@@ -11,13 +11,15 @@ pytestmark = pytest.mark.django_db
 
 
 def test_journal_list_view(rf, user):
+    post1 = EntryFactory()
     request = rf.get(reverse('journal:list'))
     request.user = user
     response = EntryListView.as_view()(request)
     assertContains(response, '<title>Journal</title>')
+    assertContains(response, post1.body)
 
 
-def test_journal_list_contains_2(rf, user):
+def test_journal_list_contains_3(rf, user):
     assert Entry.objects.count() == 0
     post1 = EntryFactory()
     post2 = EntryFactory()
