@@ -297,7 +297,7 @@ MARKDOWNIFY = {
     },
     "comment": {
         "BLEACH": True,
-        "WHITELIST_TAGS": bleach.sanitizer.ALLOWED_TAGS + ['p', 'pre'],
+        "WHITELIST_TAGS": list(bleach.sanitizer.ALLOWED_TAGS) + ['p', 'pre'],
         "LINKIFY_TEXT": {
             "PARSE_URLS": False
         }
