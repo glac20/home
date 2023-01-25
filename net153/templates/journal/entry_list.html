@@ -2,14 +2,30 @@
 {% load markdownify %}
 {% block content %}
 
+<!-- random story-->
+{% if not page_obj.has_previous %}
+<article class="story" style="margin-bottom: 0rem;">
+  <header>
+    <h3><a href="{% url 'journal:detail' date=random_post.date %}">{{random_post.date | date:"l F jS, Y"}}</a></h3>
+  </header>
+
+  <section>
+    {{random_post.body | markdownify | truncatewords_html:70}}
+  </section>
+
+</article>
+
+<article>
+  <section>
+    <hr>
+  </section>
+</article>
+{% endif %}
 {% for entry in entry_list %}
-<section class="date">
-  <h4>{{entry.date | date:"l F jS, Y"}}</h4>
-</section>
 <!--story-->
 <article class="story">
   <header>
-    <h3><a href="{% url 'journal:detail' date=entry.date %}">{{entry.date}}</a></h3>
+    <h3><a href="{% url 'journal:detail' date=entry.date %}">{{entry.date | date:"l F jS, Y"}}</a></h3>
   </header>
 
   <section>
